@@ -27,18 +27,19 @@
         <h3>Items</h3>
         <ul>
             @foreach($shipment->items as $item)
-                <li>
-                    {{ $item->name }} - Quantity: {{ $item->quantity }}
-                    <form action="{{ route('shipments.items.delete', ['shipment' => $shipment->id, 'item' => $item->id]) }}" method="POST" style="display: inline-block;">
-                        @csrf
-                        @method('POST')
-                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                    </form>
-                </li>
+            <li>
+                {{ $item->name }} - Quantity: {{ $item->quantity }} - Weight: {{ $item->weight }} - Height: {{ $item->height }}
+
+                <form action="{{ route('shipments.items.delete', ['shipment' => $shipment->id, 'item' => $item->id]) }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    @method('POST')
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </li>
             @endforeach
         </ul>
         <a href="{{ route('shipments.index') }}" class="btn btn-secondary">Back to Shipments</a>
-        
+
         <a href="{{ route('shipments.additem', $shipment->id) }}" class="btn btn-secondary">
             Add Items to Shipment
         </a>

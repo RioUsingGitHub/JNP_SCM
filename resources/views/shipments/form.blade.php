@@ -41,7 +41,10 @@
 <div class="mb-3">
     <label for="status" class="form-label">Status</label>
     <select class="form-control" id="status" name="status" required>
-        <option value="pickup" {{ (isset($shipment) && $shipment->status == 'pickup') ? 'selected' : '' }}>Pickup</option>
-        <option value="dropoff" {{ (isset($shipment) && $shipment->status == 'dropoff') ? 'selected' : '' }}>Dropoff</option>
+        <option value="Pending" {{ (isset($shipment) && $shipment->status == 'Pending') ? 'selected' : '' }}>Pending</option>
+        <option value="Pickup" {{ (isset($shipment) && $shipment->status == 'Pickup') ? 'selected' : '' }}>Pickup</option>
+        <option value="Dropped" {{ (isset($shipment) && $shipment->status == 'Dropped') ? 'selected' : '' }}>Dropped</option>
+        <option value="Delivered" {{ (isset($shipment) && $shipment->status == 'Delivered') ? 'selected' : '' }}>Delivered</option>
+        <option value="Blank" {{ (isset($shipment) && $shipment->status == 'Blank') ? 'selected' : '' }}>Blank</option>
     </select>
 </div>

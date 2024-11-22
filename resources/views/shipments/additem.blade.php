@@ -5,114 +5,90 @@
     <h1 class="text-2xl font-bold mb-6">Add Items to Shipment</h1>
     
     <form action="{{ route('shipments.items.store', $shipment->id) }}" method="POST">
-        @csrf
+    @csrf
+    <div id="items">
+        <div class="item">
+            <label for="name">Item Name</label>
+            <input type="text" name="items[0][name]" required>
 
-        <div id="items-container">
-            <!-- Item fields will be added dynamically here -->
-            <div class="space-y-4" id="item1">
-                <div class="flex flex-col">
-                    <label for="name" class="text-sm font-medium">Item Name</label>
-                    <input type="text" name="name[]" class="form-input mt-1" required>
-                </div>
-                <div class="flex flex-col">
-                    <label for="quantity" class="text-sm font-medium">Quantity</label>
-                    <input type="number" name="quantity[]" class="form-input mt-1" required>
-                </div>
-                <div class="flex flex-col">
-                    <label for="weight" class="text-sm font-medium">Weight</label>
-                    <input type="number" name="weight[]" step="0.01" class="form-input mt-1" required>
-                </div>
-                <div class="flex flex-col">
-                    <label for="height" class="text-sm font-medium">Height</label>
-                    <input type="number" name="height[]" class="form-input mt-1" required>
-                </div>
-                <div class="flex flex-col">
-                    <label for="width" class="text-sm font-medium">Width</label>
-                    <input type="number" name="width[]" class="form-input mt-1" required>
-                </div>
-                <div class="flex flex-col">
-                    <label for="length" class="text-sm font-medium">Length</label>
-                    <input type="number" name="length[]" class="form-input mt-1" required>
-                </div>
-                <div class="flex flex-col">
-                    <label for="description" class="text-sm font-medium">Description</label>
-                    <textarea name="description[]" class="form-input mt-1" rows="3" required></textarea>
-                </div>
-                <button type="button" class="remove-item mt-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
-                    Remove Item
-                </button>
-            </div>
+            <label for="quantity">Quantity</label>
+            <input type="number" name="items[0][quantity]" required min="1">
+
+            <label for="weight">Weight</label>
+            <input type="number" name="items[0][weight]" required step="0.1">
+
+            <label for="length">Length</label>
+            <input type="number" name="items[0][length]" required step="0.1">
+
+            <label for="width">Width</label>
+            <input type="number" name="items[0][width]" required step="0.1">
+
+            <label for="height">Height</label>
+            <input type="number" name="items[0][height]" required step="0.1">
+
+            <label for="description">Description</label>
+            <textarea name="items[0][description]"></textarea>
         </div>
-
-        <!-- Add More Items Button -->
-        <button type="button" id="addMoreItems" class="mt-4 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">
-            Add Another Item
-        </button>
-
-        <!-- Submit Button -->
-        <div class="mt-6 flex justify-end">
-            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
-                Save Items
-            </button>
-        </div>
-    </form>
+    </div>
+    <button type="button" onclick="addNewItem()">Add Another Item</button>
+    <button type="submit">Submit</button>
+</form>
 </div>
 
 <script>
-    document.getElementById('addMoreItems').addEventListener('click', function() {
-        const container = document.getElementById('items-container');
-        const newItem = document.createElement('div');
-        newItem.classList.add('space-y-4', 'mt-4');
+let itemCount = 0; // To track dynamically added items
 
-        newItem.innerHTML = `
-            <div class="flex flex-col">
-                <label for="name" class="text-sm font-medium">Item Name</label>
-                <input type="text" name="name[]" class="form-input mt-1" required>
-            </div>
-            <div class="flex flex-col">
-                <label for="quantity" class="text-sm font-medium">Quantity</label>
-                <input type="number" name="quantity[]" class="form-input mt-1" required>
-            </div>
-            <div class="flex flex-col">
-                <label for="weight" class="text-sm font-medium">Weight</label>
-                <input type="number" name="weight[]" step="0.01" class="form-input mt-1" required>
-            </div>
-            <div class="flex flex-col">
-                <label for="height" class="text-sm font-medium">Height</label>
-                <input type="number" name="height[]" class="form-input mt-1" required>
-            </div>
-            <div class="flex flex-col">
-                <label for="width" class="text-sm font-medium">Width</label>
-                <input type="number" name="width[]" class="form-input mt-1" required>
-            </div>
-            <div class="flex flex-col">
-                <label for="length" class="text-sm font-medium">Length</label>
-                <input type="number" name="length[]" class="form-input mt-1" required>
-            </div>
-            <div class="flex flex-col">
-                <label for="description" class="text-sm font-medium">Description</label>
-                <textarea name="description[]" class="form-input mt-1" rows="3" required></textarea>
-            </div>
-            <button type="button" class="remove-item mt-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
-                Remove Item
-            </button>
-        `;
+function addNewItem() {
+    const container = document.getElementById('items'); // Parent container for items
 
-        container.appendChild(newItem);
+    // Create a new item element
+    const newItem = document.createElement('div');
+    newItem.classList.add('space-y-4'); // Styling class
+    newItem.innerHTML = `
+        <label for="item_name">Item Name</label>
+        <input type="text" name="items[${itemCount}][name]" required>
 
-        // Add event listener to the newly created remove button
-        newItem.querySelector('.remove-item').addEventListener('click', function() {
-            container.removeChild(newItem);
-        });
+        <label for="quantity">Quantity</label>
+        <input type="number" name="items[${itemCount}][quantity]" required min="1">
+
+        <label for="weight">Weight</label>
+        <input type="number" name="items[${itemCount}][weight]" required step="0.1">
+
+        <label for="length">Length</label>
+        <input type="number" name="items[${itemCount}][length]" required step="0.1">
+
+        <label for="width">Width</label>
+        <input type="number" name="items[${itemCount}][width]" required step="0.1">
+
+        <label for="height">Height</label>
+        <input type="number" name="items[${itemCount}][height]" required step="0.1">
+
+        <label for="description">Description</label>
+        <textarea name="items[${itemCount}][description]"></textarea>
+
+        <button type="button" class="remove-item">Remove Item</button>
+    `;
+
+    // Append the new item to the container
+    container.appendChild(newItem);
+
+    // Add event listener to the remove button of the new item
+    newItem.querySelector('.remove-item').addEventListener('click', function() {
+        container.removeChild(newItem);
     });
 
-    // Attach remove event to the initial items
-    document.querySelectorAll('.remove-item').forEach(button => {
-        button.addEventListener('click', function() {
-            const item = this.closest('.space-y-4');
-            item.parentNode.removeChild(item);
-        });
+    // Increment the item counter
+    itemCount++;
+}
+
+// Attach remove event to existing items (if any)
+document.querySelectorAll('.remove-item').forEach(button => {
+    button.addEventListener('click', function() {
+        const item = this.closest('.space-y-4'); // Find the closest item container
+        item.parentNode.removeChild(item);
     });
+});
+
 </script>
 
 @endsection

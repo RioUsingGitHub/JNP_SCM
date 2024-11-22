@@ -1,4 +1,4 @@
-<div id="sidebar">
+<div id="sidebar" class="position-sticky top-0" style="height: 100vh; overflow-y: auto;">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
@@ -39,7 +39,7 @@
             </a>
         </li>
 
-        <!-- Nav Item - Shipments -->
+        <!-- Nav Item - Suppliers -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('suppliers.index') }}">
                 <i class="fas fa-fw fa-truck"></i>

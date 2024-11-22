@@ -35,10 +35,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/items/{item}', [ShipmentItemController::class, 'update'])->name('shipment.items.update');
         Route::delete('/items/{item}', [ShipmentItemController::class, 'destroy'])->name('shipment.items.destroy');
         Route::post('/items', [ShipmentItemController::class, 'store'])->name('shipments.items.store');
+        Route::post('/items/{item}/delete', [ShipmentItemController::class, 'destroy'])->name('shipments.items.delete');
+        Route::get('/additem', [ShipmentItemController::class, 'create'])->name('shipments.additem');
     });
-    Route::get('/shipments/{shipment}/additem', [ShipmentItemController::class, 'create'])->name('shipments.additem');
-    Route::post('/shipments/{shipment}/items/{item}/delete', [ShipmentItemController::class, 'destroy'])
-    ->name('shipments.items.delete');
+
+
 });
 
 require __DIR__.'/auth.php';

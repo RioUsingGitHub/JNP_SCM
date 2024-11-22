@@ -9,22 +9,19 @@ class ShipmentItem extends Model
 {
     use HasFactory;
 
-    // Add the fillable attributes
     protected $fillable = [
+        'shipment_id',
         'name',
         'quantity',
         'weight',
-        'height',
-        'width',
         'length',
+        'width',
+        'height',
         'description',
-        'shipment_id', // If the shipment_id is being passed in a relationship
     ];
 
-    // Define the relationship with Shipment
     public function shipment()
     {
         return $this->belongsTo(Shipment::class);
     }
 }
-

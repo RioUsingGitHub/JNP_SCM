@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ShipmentItem;
-use App\Observers\ShipmentObserver;
 
 class Shipment extends Model
 {
@@ -28,11 +27,5 @@ class Shipment extends Model
     public function items()
     {
         return $this->hasMany(ShipmentItem::class);
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        self::observe(ShipmentObserver::class);
     }
 }

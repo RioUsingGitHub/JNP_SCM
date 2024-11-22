@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->string('status'); // pickup, drop-off, etc.
+            $table->enum('status', ['Pending', 'Pickup', 'Dropped', 'Blank'])->default('Pending');
             $table->string('sender_name');
             $table->string('sender_city');
             $table->string('sender_address');

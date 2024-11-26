@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->string('item_name');
+            $table->string('category')->nullable();
             $table->integer('quantity_in_stock');
             $table->integer('quantity_out')->default(0);
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->timestamps();
-        
+
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('set null');
         });
-        
     }
 
     /**

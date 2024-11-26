@@ -22,6 +22,7 @@ class Shipment extends Model
         'recipient_phone',
         'recipient_postal_code',
         'status',
+        'schedule_date',
     ];
 
     public function items()

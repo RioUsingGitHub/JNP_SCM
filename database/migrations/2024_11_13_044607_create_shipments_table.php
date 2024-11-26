@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('recipient_address');
             $table->string('recipient_phone');
             $table->string('recipient_postal_code');
+            $table->date('schedule_date')->nullable();
             $table->timestamps();
         });
-        
     }
 
     /**

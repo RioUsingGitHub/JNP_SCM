@@ -21,10 +21,11 @@
     <div>
         <h3>Status</h3>
         <p>{{ ucfirst($shipment->status) }}</p>
+        <p>{{ $shipment->schedule_date }}, {{ $shipment->schedule_date }}</p>
     </div>
 
     <div>
-        <h3>Items</h3>
+        <h3>Items / Package</h3>
         <ul>
             @foreach($shipment->items as $item)
             <li>

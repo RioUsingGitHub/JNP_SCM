@@ -13,5 +13,9 @@ class Supplier extends Model
         'name',
         'address',
         'phone',
+        'company_name',
+        'supplier_code',
+        'city',
+        'state_province',
     ];
 }

@@ -14,6 +14,7 @@ class Inventory extends Model
      */
     protected $fillable = [
         'name',
+        'category',
         'quantity_in_stock',
         'quantity_out',
         'supplier_id', // Optional: if linked to suppliers

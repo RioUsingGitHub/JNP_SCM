@@ -64,6 +64,7 @@ class InventoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'category' => 'required|in:Checked,Banned,Unchecked',
             'quantity_in_stock' => 'required|integer|min:0',
             'quantity_out' => 'nullable|integer|min:0',
         ]);

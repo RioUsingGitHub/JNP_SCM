@@ -1,10 +1,10 @@
-<div id="sidebar" class="position-sticky top-0" style="height: 100vh; overflow-y: auto;">
+<div id="sidebar" class="position-sticky top-0">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('homepage') }}">
             <div class="sidebar-brand-icon">
-                <i class="fas fa-cogs"></i>
+                <i class='fas fa-warehouse' style='font-size:36px;'></i>
             </div>
             <div class="sidebar-brand-text mx-3">SCM JNP</div>
         </a>
@@ -42,7 +42,7 @@
         <!-- Nav Item - Suppliers -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('suppliers.index') }}">
-                <i class="fas fa-fw fa-truck"></i>
+                <i class="fas fa-users"></i>
                 <span>Suppliers</span>
             </a>
         </li>

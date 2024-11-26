@@ -36,7 +36,8 @@ class ShipmentController extends Controller
             'recipient_address' => 'required|string',
             'recipient_phone' => 'required|string',
             'recipient_postal_code' => 'required|string',
-            'status' => 'required|in:pickup,dropoff',
+            'status' => 'required|in:Pending,Pickup,Dropped,Blank',
+            'schedule_date' => 'nullable|date',
             'items.*.name' => 'required|string',
             'items.*.quantity' => 'required|integer',
             'items.*.weight' => 'required|numeric',
@@ -58,6 +59,7 @@ class ShipmentController extends Controller
             'recipient_phone',
             'recipient_postal_code',
             'status',
+            'schedule_date',
         ]));
 
         if ($request->has('items')) {
@@ -95,6 +97,7 @@ class ShipmentController extends Controller
             'recipient_phone' => 'required|string',
             'recipient_postal_code' => 'required|string',
             'status' => 'required|in:Pending,Pickup,Dropped,Blank',
+            'schedule_date' => 'nullable|date',
         ]);
 
         DB::transaction(function () use ($shipment, $validated) {

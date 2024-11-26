@@ -48,3 +48,7 @@
         <option value="Blank" {{ (isset($shipment) && $shipment->status == 'Blank') ? 'selected' : '' }}>Blank</option>
     </select>
 </div>
+<div class="mb-3">
+    <label for="schedule_date" class="form-label">Schedule Date</label>
+    <input type="date" class="form-control" id="schedule_date" name="schedule_date" value="{{ $shipment->schedule_date ?? old('schedule_date') }}">
+</div>

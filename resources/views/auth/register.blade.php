@@ -1,52 +1,98 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+    <div class="form-box shadow rounded p-4">
+        <h2 class="text-center mb-4">Register</h2>
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text"
+                    class="form-control @error('name') is-invalid @enderror"
+                    id="name"
+                    name="name"
+                    value="{{ old('name') }}"
+                    placeholder="Enter your name"
+                    required />
+                @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email"
+                    class="form-control @error('email') is-invalid @enderror"
+                    id="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    placeholder="Enter your email"
+                    required />
+                @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required />
+                @error('password')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <!-- Confirm Password -->
+            <div class="mb-3">
+                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                <input type="password"
+                    class="form-control"
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    placeholder="Confirm your password"
+                    required />
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <!-- Privacy Policy -->
+            <div class="form-check mb-3">
+                <input type="checkbox"
+                    class="form-check-input @error('privacy_policy') is-invalid @enderror"
+                    id="privacy_policy"
+                    name="privacy_policy"
+                    required />
+                <label class="form-check-label" for="privacy_policy">
+                    I have read, understood, and agree with J&P Privacy Policy
+                </label>
+                @error('privacy_policy')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            <button type="submit" class="btn btn-primary w-100">
+                Register
+            </button>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+            <p class="text-center mt-3">
+                Already have an account?
+                <a href="{{ route('login') }}" class="text-decoration-none">
+                    Login here
+                </a>
+            </p>
+        </form>
+    </div>
 </x-guest-layout>

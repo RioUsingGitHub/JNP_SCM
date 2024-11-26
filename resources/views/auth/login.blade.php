@@ -1,24 +1,74 @@
 <x-guest-layout>
-    <div class="form-container">
+    <div class="login-form-container text-center">
+        <h2 class="mb-4">LOGIN</h2>
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <h2 class="text-2xl font-bold mb-6 text-gray-700 text-center">Login</h2>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="email" type="email" name="email" required>
+
+            <!-- Email Address -->
+            <div class="mb-3 text-start">
+                <label for="email" class="form-label">Email</label>
+                <input type="email"
+                    class="form-control @error('email') is-invalid @enderror"
+                    id="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    placeholder="example@gmail.com"
+                    required
+                    autofocus />
+                @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="password" type="password" name="password" required>
+
+            <!-- Password -->
+            <div class="mb-3 text-start">
+                <label for="password" class="form-label">Password</label>
+                <input type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    id="password"
+                    name="password"
+                    placeholder="example123"
+                    required />
+                @error('password')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
-            <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit">
-                    Login
-                </button>
+
+            <!-- Remember Me -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <input class="form-check-input"
+                        type="checkbox"
+                        id="remember_me"
+                        name="remember">
+                    <label class="form-check-label" for="remember_me">
+                        Remember me
+                    </label>
+                </div>
+                @if (Route::has('password.request'))
+                <a href="{{ route('password.request') }}" class="text-decoration-none">
+                    Forgot password?
+                </a>
+                @endif
             </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Login
+            </button>
+
+            @if (Route::has('register'))
+            <p class="text-center mt-3">
+                Don't have an account?
+                <a href="{{ route('register') }}" class="text-decoration-none">
+                    Register Now
+                </a>
+            </p>
+            @endif
         </form>
     </div>
 </x-guest-layout>

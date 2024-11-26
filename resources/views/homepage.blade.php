@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Done -->
+<!-- Done, tested -->
 
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            /* Space between the images */
+            /* Space between the images dikasi gap*/
             overflow: hidden;
             /* Prevents images from overflowing */
         }
@@ -58,6 +58,30 @@
             /* Adjust size */
         }
 
+        /* Banner Section */
+        .profile-banner {
+            background-color: white;
+            /* Fallback color */
+            mix-blend-mode: multiply;
+            /* Adjust transparency for blending */
+            height: auto;
+            padding-bottom: 10px;
+            /* Additional space for name alignment */
+        }
+
+        /* Adjust Modal Body */
+        .modal-body {
+            border-radius: 0.5rem;
+            padding-top: 60px;
+            /* Account for overlapping profile picture */
+        }
+
+        /* Profile Picture Adjustments */
+        .modal-body img {
+            margin-top: -70px;
+            /* Overlaps with the banner */
+        }
+
         @keyframes scroll {
             0% {
                 transform: translateX(0);
@@ -71,42 +95,95 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg" style="background-color: rgba(0, 0, 0, 0.7); z-index: 10; position: relative;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 0, 0, 0.7); z-index: 10; position: relative;">
         <div class="container">
             <i class='fas fa-warehouse' style='font-size:48px;color:white'></i>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler text-white border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <!-- Conditional Links -->
-                    @if(!Auth::check()) <!-- For Laravel -->
+                    <style>
+                        /* Force visibility on mobile */
+                        @media (max-width: 991.98px) {
+                            .navbar-collapse {
+                                display: none;
+                                background-color: rgba(0, 0, 0, 0.9);
+                                padding: 1rem;
+                                position: absolute;
+                                top: 100%;
+                                left: 0;
+                                right: 0;
+                                z-index: 1000;
+                            }
+
+                            .navbar-collapse.show {
+                                display: block !important;
+                            }
+
+                            .navbar-nav {
+                                display: flex !important;
+                                flex-direction: column;
+                                align-items: start;
+                                width: 100%;
+                            }
+
+                            .nav-item {
+                                width: 100%;
+                                padding: 0.5rem 1rem;
+                            }
+
+                            .nav-link {
+                                color: white !important;
+                            }
+
+                            .dropdown-menu {
+                                background-color: rgba(0, 0, 0, 0.8);
+                                border: none;
+                                width: 100%;
+                            }
+
+                            .dropdown-item {
+                                color: white;
+                            }
+
+                            .dropdown-item:hover {
+                                background-color: rgba(255, 255, 255, 0.1);
+                                color: white;
+                            }
+                        }
+                    </style>
+                    @if(!Auth::check())
                     <li class="nav-item"><a class="nav-link" href="/login" style="color: white;">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="/register" style="color: white;">Register</a></li>
                     @else
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-600 small" style="color: white;">
-                                    Welcome, {{ auth()->user()->name }}
-                                </span>
-                                <i class="fas fa-user-circle fa-2x text-gray-600"></i>
-                            </a>
-                            <!-- Dropdown Menu -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="me-2 text-white">
+                                Welcome, {{ auth()->user()->name }}
+                            </span>
+                            <i class="fas fa-user-circle fa-2x text-white"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                    <i class="fas fa-user fa-sm fa-fw me-2"></i> Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2"></i> Settings</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i> Logout
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+
+                    </li>
                     @endif
                 </ul>
             </div>
@@ -116,16 +193,16 @@
     <header
         class="bg-primary text-white text-center py-5 position-relative"
         style="
-        background-image: url('{{ asset('img/assets/homepage.png') }}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        margin-top: -70px;
-        padding-bottom: 150px; 
-        height: 450px; 
-        overflow: hidden; 
-        z-index: 5; 
-    ">
+            background-image: url('{{ asset('img/assets/homepage.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-top: -70px;
+            padding-bottom: 150px;
+            height: 450px;
+            overflow: hidden;
+            z-index: 5;
+        ">
         <div class="container text-center" style="margin-top: 100px; position: relative; z-index: 2;">
             <!-- Add subtle shadow for a modern look -->
             <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
@@ -253,9 +330,75 @@
         </div>
     </div>
 
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Banner Section -->
+                <div class="profile-banner"
+                    style="background: url('img/assets/art.png') center/cover; position: relative; height: 200px;">
+                    <!-- Profile Picture -->
+                    <div class="position-absolute" style="bottom: 20px; left: 50%; transform: translateX(-50%);">
+                        <img src="img/assets/profileowo.png" class="rounded-circle shadow" alt="Profile Picture"
+                            style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #fff;">
+                    </div>
+
+                </div>
+
+                <!-- Profile Info -->
+                <div class="modal-body text-center bg-white rounded-top px-4 py-5 shadow mt-3">
+                    <!-- Name -->
+                    <h5 class="mb-1">SI OWO</h5>
+
+                    <!-- Role -->
+                    <small class="text-muted d-block mb-3">Super Admin</small>
+
+                    <!-- Actions -->
+                    <div class="d-flex justify-content-center gap-3">
+                        <button class="btn btn-primary px-4">Edit</button>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-secondary px-4">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+
+            // Handle toggler click
+            navbarToggler.addEventListener('click', function() {
+                navbarCollapse.classList.toggle('show');
+            });
+
+            // Close navbar when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = navbarCollapse.contains(event.target) ||
+                    navbarToggler.contains(event.target);
+
+                if (!isClickInside && navbarCollapse.classList.contains('show')) {
+                    navbarCollapse.classList.remove('show');
+                }
+            });
+
+            // Close navbar when pressing escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && navbarCollapse.classList.contains('show')) {
+                    navbarCollapse.classList.remove('show');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

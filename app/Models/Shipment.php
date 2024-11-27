@@ -25,6 +25,11 @@ class Shipment extends Model
         'schedule_date',
     ];
 
+    public function locations()
+    {
+        return $this->hasMany(ShipmentLocation::class);
+    }
+
     public function items()
     {
         return $this->hasMany(ShipmentItem::class);

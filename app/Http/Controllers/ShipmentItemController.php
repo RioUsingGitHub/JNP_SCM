@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Shipment;
 use App\Models\ShipmentItem;
+use Illuminate\Support\Facades\Log;
 
 class ShipmentItemController extends Controller
 {
@@ -57,16 +58,8 @@ class ShipmentItemController extends Controller
         return redirect()->route('shipments.show', $shipment)->with('success', 'Item updated successfully.');
     }
 
-    public function destroy(Request $request, Shipment $shipment, ShipmentItem $item)
+    public function destroy(Shipment $shipment, ShipmentItem $item)
     {
-        // Check if the quantity in stock is sufficient to remove the item
-        if ($item->quantity_in_stock < $item->quantity) {
-            return redirect()->route('shipments.show', $shipment->id)
-                ->with('error', 'Cannot remove the item as the quantity in stock is insufficient.');
-        }
-
-        $item->delete();
-        return redirect()->route('shipments.show', $shipment->id)
-            ->with('success', 'Item removed from shipment successfully.');
+        // Ngapain di delete item nya
     }
 }

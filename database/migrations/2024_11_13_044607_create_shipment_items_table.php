@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('shipment_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('shipment_id');
-            $table->string('item_name');
+            $table->string('name');
             $table->integer('quantity');
             $table->float('weight');
             $table->float('height');

@@ -19,4 +19,6 @@ class Inventory extends Model
         'quantity_out',
         'supplier_id', // Optional: if linked to suppliers
     ];
+
+    
 }

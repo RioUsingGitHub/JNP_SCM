@@ -14,6 +14,26 @@ Route::get('/', function () {
     return view('homepage');
 })->name('homepage');
 
+use App\Models\ShipmentItem;
+
+Route::get('/test-inventory/{itemId}', function ($itemId) {
+    $item = ShipmentItem::find($itemId);
+
+    if (!$item) {
+        return "Shipment Item not found.";
+    }
+
+    $inventory = $item->inventory;
+
+    if ($inventory) {
+        return "Quantity in Stock: " . $inventory->quantity_in_stock;
+    } else {
+        return "Inventory record not found.";
+    }
+});
+
+
+Route::get('/track', [ShipmentController::class, 'track'])->name('track');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('verified')
@@ -38,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/items', [ShipmentItemController::class, 'store'])->name('shipments.items.store');
         Route::post('/items/{item}/delete', [ShipmentItemController::class, 'destroy'])->name('shipments.items.delete');
         Route::get('/additem', [ShipmentItemController::class, 'create'])->name('shipments.additem');
+        Route::post('/location', [ShipmentController::class, 'updateLocation'])->name('shipments.location.update');
     });
 });
 

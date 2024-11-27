@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('item_name');
+            $table->string('name');
             $table->string('category')->nullable();
+            $table->enum('category', ['Checked', 'Banned', 'Unchecked'])->default('Unchecked');
             $table->integer('quantity_in_stock');
             $table->integer('quantity_out')->default(0);
             $table->unsignedBigInteger('supplier_id')->nullable();

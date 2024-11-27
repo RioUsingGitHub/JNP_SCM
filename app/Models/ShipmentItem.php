@@ -9,6 +9,8 @@ class ShipmentItem extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $fillable = [
         'shipment_id',
         'name',
@@ -24,4 +26,7 @@ class ShipmentItem extends Model
     {
         return $this->belongsTo(Shipment::class);
     }
+
+
+
 }

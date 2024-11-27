@@ -17,6 +17,9 @@ class DashboardController extends Controller
         $inventoryCount = Inventory::count();
         $supplierCount = Supplier::count();
         $droppedShipments = Shipment::where('status', 'Dropped')->count();
+        $deliveredShipments = Shipment::where('status', 'Delivered')->count();
+        $pendingShipments = Shipment::where('status', 'Pending')->count();
+        $pickupShipments = Shipment::where('status', 'Pickup')->count();
         $newShipments = Shipment::where('created_at', '>=', now()->subDay())->count();
 
         // Calculate total weights using ShipmentItem
@@ -40,6 +43,9 @@ class DashboardController extends Controller
             'inventoryCount',
             'supplierCount',
             'droppedShipments',
+            'deliveredShipments',
+            'pendingShipments',
+            'pickupShipments',
             'totalWeightInStock',
             'totalWeightOut',
             'newShipments',

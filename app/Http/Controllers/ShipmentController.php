@@ -96,7 +96,7 @@ class ShipmentController extends Controller
             'recipient_address' => 'required|string',
             'recipient_phone' => 'required|string',
             'recipient_postal_code' => 'required|string',
-            'status' => 'required|in:Pending,Pickup,Dropped,Blank',
+            'status' => 'required|in:Pending,Pickup,Dropped,Delivered,Blank',
             'schedule_date' => 'nullable|date',
         ]);
 
@@ -125,8 +125,29 @@ class ShipmentController extends Controller
                 }
             }
 
-            // Handle shipment status change to 'Dropped'
+            // Handle shipment status change to 'Pickup'
             if ($validated['status'] === 'Dropped' && $previousStatus !== 'Dropped') {
+                foreach ($shipment->items as $item) {
+                    $inventory = Inventory::where('name', $item->name)->first();
+
+                    if ($inventory) {
+                        // Update existing inventory record
+                        $inventory->update([
+                            'quantity_in_stock' => $inventory->quantity_in_stock + $item->quantity,
+                        ]);
+                    } else {
+                        // Create a new inventory record
+                        Inventory::create([
+                            'name' => $item->name,
+                            'quantity_in_stock' => $item->quantity,
+                            'quantity_out' => 0, // Initial value
+                        ]);
+                    }
+                }
+            }
+
+            // Handle shipment status change to 'Delivered'
+            if ($validated['status'] === 'Delivered' && $previousStatus !== 'Dropped') {
                 foreach ($shipment->items as $item) {
                     $inventory = Inventory::firstOrCreate(
                         ['name' => $item->name],
